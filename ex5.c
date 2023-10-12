@@ -27,8 +27,7 @@ void switch_children(int sign) {
 }
 
 void alarmHandler(int sign) {
-    signal(SIGALRM, alarmHandler); // Reset the signal handler
-    alarm(1); // Set the next alarm to trigger in 1 second
+    alarm(1);
     timer++;
     switch_children(0);
 }
@@ -57,13 +56,13 @@ int main() {
         exit(1);
     }
 
-    // Set up alarm to send SIGALRM every 1 second
+    // COnfigura e inicializa o alarme
     signal(SIGALRM, alarmHandler);
     alarm(1);
 
     while (1)
     {
-        if(timer >= 5) 
+        if(timer >= 15) 
         {
             kill(child1, SIGKILL);
             kill(child2, SIGKILL);
