@@ -8,7 +8,7 @@
 int child1_running = 1;
 int child2_running = 0;
 pid_t child1, child2;
-
+int timer = 0;
 
 void switch_children(int sign) {
     if (child1_running) {
@@ -29,6 +29,7 @@ void switch_children(int sign) {
 void alarmHandler(int sign) {
     signal(SIGALRM, alarmHandler); // Reset the signal handler
     alarm(1); // Set the next alarm to trigger in 1 second
+    timer++;
     switch_children(0);
 }
 
@@ -60,10 +61,17 @@ int main() {
     signal(SIGALRM, alarmHandler);
     alarm(1);
 
-    sleep(15);
-    kill(child1, SIGKILL);
-    kill(child2, SIGKILL);
-    printf("Tempo de excucao superior a 15s - filhos foram terminados.\n");
+    while (1)
+    {
+        if(timer >= 5) 
+        {
+            kill(child1, SIGKILL);
+            kill(child2, SIGKILL);
+            printf("Tempo de excucao superior a 15s - filhos foram terminados.\n");
+            exit(0);
+        }
+    }
+    
 
     return 0;
 }

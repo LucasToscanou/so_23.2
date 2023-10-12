@@ -4,5 +4,7 @@
 
 int main(int argc, char *argv[]){
     printf("Loop eterno do pid = %d.\n", getpid());
-    for(EVER);
+    for(EVER){
+        printf("loop %d", getpid());
+    };
 }
